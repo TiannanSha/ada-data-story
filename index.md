@@ -1,10 +1,14 @@
-## Welcome to GitHub Pages
+## Our Awesome Title
+
+In this project we extend the civilwar paper. We attempt to answer three questions
+
+### Neural Networks for predicting civil war
 
 You can use the [editor on GitHub](https://github.com/TiannanSha/ada-data-story/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
 
 Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
 
-### Markdown
+### Neural Networks for predicting civil war
 
 Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
 
