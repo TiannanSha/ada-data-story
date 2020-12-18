@@ -33,7 +33,7 @@ In the civil war paper, it says that:
 >
 > ...
 >
-> Variables with a greater mean decrease in the Gini Score more accurately predict the true class of observation i when i is OOB.
+> Variables with a greater mean decrease in the Gini Score more accurately predict the true class of observation $i$ when $i$ is OOB.
 >
 > ...
 >
@@ -45,48 +45,52 @@ However, it must be very cautious while talking about the causality. In most of 
 
 In our work, we will do the causal inference to learn if the value of GDP growth can really lead to civil war onset by using the same dataset and features as the Random Forest model.  
 
-### 3.2 Causality
+### Causality
 
-One of the most widely used model of causal inference is the Neyman-Rubin model.  In a basic Neyman-Rubin model, if we want to know the causal effect of a feature T, we will assign the samples into two groups based on the value of T: 
+One of the most widely used model of causal inference is the Neyman-Rubin model.  In a basic Neyman-Rubin model, if we want to know the causal effect of a feature $T$, we will assign the samples into two groups based on the value of $$T$$: 
 
-* Treatment group: T = 1
-* Control group: T = 0
+* Treatment group: $$T = 1$$
+* Control group: $$T = 0$$
 
-Then, the potential output of the two groups, Y|T=1 and Y|T=0 can be compared and show the causal effect of feature T: E(Y|T=1) - E(Y|T=0)
+Then, the potential output of the two groups, $Y|T=1$ and $Y|T=0$ can be compared and show the causal effect of feature $T$:
+$$
+\tau = E(Y|T=1) - E(Y|T=0)
+$$
+However, this idea is based on a assumption that the other features of the Treatment group and Control group are similar, they only have difference in the feature $T$. It's very difficult to hold this assumption for the observation data because we can't determine the distribution of the covariates by randomization.  So if it's possible to use this causality model even in the observation study?
 
-However, this idea is based on a assumption that the other features of the Treatment group and Control group are similar, they only have difference in the feature T. It's very difficult to hold this assumption for the observation data because we can't determine the distribution of the covariates by randomization.  So if it's possible to use this causality model even in the observation study?
-
-The answer is yes. What we need is the tool called propensity scores. A propensity score is the conditional probability that a subject receives “treatment” given the subject’s observed covariates: prop_score = P(T = 1|X)
-
-The goal of propensity scoring is to  balance observed covariates between subjects in control and treatment study groups. The researchers have proven that when the propensity score is balanced in the treatment and control group, we can get the causal effect of feature T properly. So we will start with find a good propensity scores and balance the propensity scores of the two groups.
+The answer is yes. What we need is the tool called propensity scores. A propensity score is the conditional probability that a subject receives “treatment” given the subject’s observed covariates:
+$$
+prop\_score = P(T = 1|X)
+$$
+The goal of propensity scoring is to  balance observed covariates between subjects in control and treatment study groups. The researchers have proven that when the propensity score is balanced in the treatment and control group, we can get the causal effect of feature $T$ properly. So we will start with find a good propensity scores and balance the propensity scores of the two groups.
 
 After we get the propensity scores, we can then do the "Propensity Score Matching". By doing this, each pair of samples has similar Propensity Scores so we can compare their outputs. 
 
 Our architecture to do the causal inference is:
 
-![](images/causal1.PNG)
+![](images/causal1.png)
 
-### 3.3 Treatment
+### Treatment
 
-Because we want to get the causal effect of feature GDP Growth, we must find a good way to assign the samples into the Treatment Group and Control Group. If the Treatment T is a binary value, the samples can be divided based on the binary value of T. However, the GDP Growth is continuous  float numbers, and the continues treatment problem is much more complex than the binary case. So our basic idea is to discretize the GDP Growth:
+Because we want to get the causal effect of feature GDP Growth, we must find a good way to assign the samples into the Treatment Group and Control Group. If the Treatment $T$ is a binary value, the samples can be divided based on the binary value of $T$. However, the GDP Growth is continuous  float numbers, and the continues treatment problem is much more complex than the binary case. So our basic idea is to discretize the GDP Growth:
 
-![](images/causal2.png)
+<img src="images/causal2.png" style="zoom:70%;" />
 
 We divide the samples into three parts based on the quantile of the GDP Growth. In order to make sure the GDP Growth of the Treatment Group and Control Group have a "gap", we choose to drop the "middle" samples.
 
 ![](images/causal4.png)
 
-When the alpha is too big, the difference between the Treatment Group and Control Group will close to 0 and there is no gap between them. However when the alpha is too small, the sample size of each group will be small, and we can only use a little part of the dataset.
+When the $\alpha$ is too big, the difference between the Treatment Group and Control Group will close to 0 and there is no gap between them. However when the $\alpha$ is too small, we the sample size of each group will be small, and we can only use a little part of the dataset.
 
 ![](images/causal3.png)
 
- After tuning the alpha,  we choose to let alpha=0.3 and we can use 60% of the samples.
+ After tuning the alpha,  we choose to let $\alpha=0.3$ and we can use $60\%$ of the samples.
 
 What's more, from the density plot, we can see that the positive and negative samples has the similar distributions in each group.
 
 
 
-### 3.4 Covariates
+### Covariates
 
 Based on the Random Forest Model, we can select some features as covariates. Now let's show that these covariates are imbalanced in Treatment and Control Group, by using the t-test of the mean of two independent samples:
 
@@ -96,7 +100,7 @@ Most of the features are imbalanced in the Treatment Group and Control Group. So
 
 
 
-### 3.5 Propensity score
+### Propensity score
 
 We train a model to predict if the sample is in the treatment group by using the the covariates. The probability of the prediction can be regard as the  propensity score. We try three different models to get the propensity score.
 
@@ -106,7 +110,7 @@ Based on the result above, we choose to use the Logistic Regression model to gen
 
 
 
-### 3.6 Matching
+### Matching
 
 We can match the samples by using a greedy algorithm:
 
@@ -114,21 +118,21 @@ We can match the samples by using a greedy algorithm:
 
 1. Drop some samples to make sure the two groups have the same range of propensity score.
 
-2. t = min_propensity_score(Treatment), the sample is s_t
+2. $t = min\_propensity\_score(Treatment)$, the sample is $s_t$
 
-   c = min_propensity_score(Control), the sample is s_c
+   $c = min\_propensity\_score(Control)$, the sample is $s_c$
 
-3. Compare t and c:
-   1. t - c > delta: drop s_c
-   2. t - c < -delta: drop s_t
-   3. otherwise: match (s_c, s_t) and drop them
+3. Compare $t$ and $c$:
+   1. $t - c > \delta$: drop $s_c$
+   2. $t - c < -\delta$: drop $s_t$
+   3. otherwise: match $(s_c, s_t)$ and drop them
 4. If there is no sample in Treatment Group or Control Group, return all the matches. Otherwise go back to step 2
 
  By running this algorithm, we can get the differences of the propensity scores in each pair:
 
 ![](images/causal8.png)
 
-We can find when the bound become smaller, the number of pairs becomes smaller. But when the bound become bigger, the quality of matches become worse. Finally we choose bound = 0.0002.
+We can find when the bound become smaller, the number of pairs becomes smaller. But when the bound become bigger, the quality of matches become worse. Finally we choose $bound = 0.0002$.
 
 After the matching, we can test the balance of the covariates again and get the result:
 
@@ -138,15 +142,22 @@ That means all covariates are balanced.
 
 
 
-### 3.7 Mean causal effect
+### Mean causal effect
 
-The mean causal effect is:
-
-![](images/causal11.png)
-
+Compute the mean causal effect:
+$$
+\hat \tau = \frac{1}{\#pairs}\sum_{(c, t)\in pairs} (y_{t} - y_{c})
+$$
+Then we can get the:
+$$
+\hat \tau = 0.00659\\
+\sigma(\tau) = 0.1708
+$$
 So our result shows that there is no significant causal effect.
 
-### 3.8 Train Random Forest model with the matching data
+
+
+### Train Random Forest model with the matching data
 
 Finally, we choose to train a Random Forest model by using the matching data only. The importance of the features is:
 
@@ -154,11 +165,32 @@ Finally, we choose to train a Random Forest model by using the matching data onl
 
 That means even the gdpgrowth have no significant causal effect, it's still the most important feature.
 
-### 3.9 Conclusion
 
-Our result shows clearly that even though the GDP Growth is the most important feature in the Random Forest model, it can not show that it have significant causal effect. Using Random Forest to do causal inference can't make sense.
 
-However, our result may be not very good because there are only limited number of positive samples. If we can get more balanced dataset, we can get a better result.
+
+## 4. Analyzing the impact of civil war on GDP growth
+
+### 4.1 Background
+Now that we have analyzed the impact that GDP growth has on civil war onset, we now invert the question. At this point, we want to understand how the growth rate of a country changes after a civil war with respect to how it was before the war. 
+
+In order to do so, we utilize some regression methods that can estimate the effect of civil war on GDp.
+
+### 4.2 Linear Regression to obtain the effect of the civil war
+
+#### 4.2.1 Data Processing
+We processed the dataset in a way such that we had two entry for each civil war, one before the civil war and one after. We computed the average growth in the 5 years immediately before the war, and in the 5 years immediately after. We also included several other variable which could potentially cause disturbance in the data being correlated with the residuals, such as the year, the duration of the war, the geographical region and the number of wars experienced by a country.
+
+#### 4.2.2 GLS Regression
+
+After having a ready dataset, we carried a linear regression with the following variables:
+
+```avg_growth ~ post_war,war_length, avg_neigh_gdp, num_wars,geo2,geo8,geo34,geo57,geo69```
+
+In order to carry the regression, we used GLS estimators, as they account for correlation of residuals, which is quite probable in our problem.
+
+The results are 
+
+
 
 ```markdown
 Syntax highlighted code block
