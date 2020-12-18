@@ -108,7 +108,7 @@ After we get the propensity scores, we can then do the "Propensity Score Matchin
 
 Our architecture to do the causal inference is:
 
-![](images/causal1.png)
+![](images/causal1.PNG)
 
 ### 3.3 Treatment
 
