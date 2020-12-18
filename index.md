@@ -33,7 +33,7 @@ In the civil war paper, it says that:
 >
 > ...
 >
-> Variables with a greater mean decrease in the Gini Score more accurately predict the true class of observation $i$ when $i$ is OOB.
+> Variables with a greater mean decrease in the Gini Score more accurately predict the true class of observation i when i is OOB.
 >
 > ...
 >
@@ -47,28 +47,24 @@ In our work, we will do the causal inference to learn if the value of GDP growth
 
 ### Causality
 
-One of the most widely used model of causal inference is the Neyman-Rubin model.  In a basic Neyman-Rubin model, if we want to know the causal effect of a feature $T$, we will assign the samples into two groups based on the value of $$T$$: 
+One of the most widely used model of causal inference is the Neyman-Rubin model.  In a basic Neyman-Rubin model, if we want to know the causal effect of a feature T, we will assign the samples into two groups based on the value of T: 
 
-* Treatment group: $$T = 1$$
-* Control group: $$T = 0$$
+* Treatment group: T = 1
+* Control group: T = 0
 
-Then, the potential output of the two groups, $Y|T=1$ and $Y|T=0$ can be compared and show the causal effect of feature $T$:
-$$
-\tau = E(Y|T=1) - E(Y|T=0)
-$$
-However, this idea is based on a assumption that the other features of the Treatment group and Control group are similar, they only have difference in the feature $T$. It's very difficult to hold this assumption for the observation data because we can't determine the distribution of the covariates by randomization.  So if it's possible to use this causality model even in the observation study?
+Then, the potential output of the two groups, Y|T=1 and Y|T=0 can be compared and show the causal effect of feature T: E(Y|T=1) - E(Y|T=0)
 
-The answer is yes. What we need is the tool called propensity scores. A propensity score is the conditional probability that a subject receives “treatment” given the subject’s observed covariates:
-$$
-prop\_score = P(T = 1|X)
-$$
-The goal of propensity scoring is to  balance observed covariates between subjects in control and treatment study groups. The researchers have proven that when the propensity score is balanced in the treatment and control group, we can get the causal effect of feature $T$ properly. So we will start with find a good propensity scores and balance the propensity scores of the two groups.
+However, this idea is based on a assumption that the other features of the Treatment group and Control group are similar, they only have difference in the feature T. It's very difficult to hold this assumption for the observation data because we can't determine the distribution of the covariates by randomization.  So if it's possible to use this causality model even in the observation study?
+
+The answer is yes. What we need is the tool called propensity scores. A propensity score is the conditional probability that a subject receives “treatment” given the subject’s observed covariates: prop_score = P(T = 1|X)
+
+The goal of propensity scoring is to  balance observed covariates between subjects in control and treatment study groups. The researchers have proven that when the propensity score is balanced in the treatment and control group, we can get the causal effect of feature T properly. So we will start with find a good propensity scores and balance the propensity scores of the two groups.
 
 After we get the propensity scores, we can then do the "Propensity Score Matching". By doing this, each pair of samples has similar Propensity Scores so we can compare their outputs. 
 
 Our architecture to do the causal inference is:
 
-![](images/causal1.png)
+![](images/causal1.PNG)
 
 ### Treatment
 
