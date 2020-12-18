@@ -186,10 +186,10 @@ After having a ready dataset, we carried a linear regression with the following 
 
 ```avg_growth ~ post_war,war_length, avg_neigh_gdp, num_wars,geo2,geo8,geo34,geo57,geo69```
 
-In order to carry the regression, we used GLS estimators, as they account for correlation of residuals, which is quite probable in our problem.
+In order to carry the regression, we used GLS estimators, as they account for correlation of residuals, which is quite probable in our problem. Before the experiment, we determine that we consider the critical value $\alpha$ to be $\alpha = 0.05$, meaning that we will consider as statistically significative all coefficients with an associated p-value $p<0.05$
 
-The results are 
-
+The results of these regression show that the GLS estimator for the coefficient of the variable `post_war` is 0.0162, with a standar error of 0.027. This means that the the p-value associated to the variable indicating whether we are in a period before or after a war is 0.047. This value is below the critical value of $\alpha = 0.05$, thus we accept the result, which implies that the coefficient of the variable `post_war` is statistically significative. This, in turn means that the GDP growth in the five years after the end of a civil wear tends to be higher by 1.62% than in the 5 years before the civil war.  
+This result can be explained by the fact that during the civil war, a great destruction and reduction in GDP is generally experienced by country. Hence, the post-war usually sees a reconstruction effort which implies a high GDP growth rate, as the country has to reach back its original level of income. 
 
 
 ```markdown
