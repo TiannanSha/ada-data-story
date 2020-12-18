@@ -33,12 +33,12 @@ We implemented two neural networks (NN) with similar architectures, with one tak
 We used the Adam optimization algorithm to train our deepnet. We plotted the loss vs. epoch curve. We can see that the loss is flatten at the end of training. The accuracy oscillates around 98.3%. Because the loss and accuracy have stopped getting better, we believe the training has completed. Note that because we have extremly imbalanced class distribution, the 98.3% accuracy doesn't mean anything. (We can achieve 98% accuracy by simply guessing no war all the time). The loss and accuracy plots are for telling us when to finish training only.
 
 loss/accuracy vs. number of epoch (NN with 90 variables as input)
-![Image](/images/train_loss_NN90.svg)
-![Image](/images/train_acc_NN90.svg)
+![Image](/images/train_loss_NN90.PNG)
+![Image](/images/train_acc_NN90.PNG)
 
 loss/accuracy vs. number of epoch (NN with 285 variables as input)
-![Image](/images/train_loss_NN285.svg)
-![Image](/images/train_acc_NN285.svg)
+![Image](/images/train_loss_NN285.PNG)
+![Image](/images/train_acc_NN285.PNG)
 
 
 ##### Terrible Performance of NN
@@ -51,7 +51,7 @@ It turned out that although being some of the most flashy classification algorit
 We also applied Support Vector Machine, a classic classification algorithm. We applied the normalization first and then feed the normalized data to the SVM model. The performance of SVM is shown in section 2.5.
 
 #### 2.5 Compare all models
-Now we compare all models. The number 285/90 denotes the number of explanotory variables. We can see that neural networks have the worst performance where as random forest with or without SMOTE have the best performance. SVMs have good results but not as good as random forests with or without SMOTE. For all methods except neural networks, including all the variables help improving the performance by quite a bit.
+Now we compare all models. The number 285/90 denotes the number of explanotory variables. SMOTE denotes combining SMOTE sampling with random forest. We can see that neural networks have the worst performance where as random forest with or without SMOTE have the best performance. SVMs have good results but not as good as random forests with or without SMOTE. For all methods except neural networks, including all the variables help improving the performance by quite a bit.
 ![Image](/images/all_models_rocs.png)
 
 
