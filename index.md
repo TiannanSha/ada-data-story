@@ -154,6 +154,12 @@ Finally, we choose to train a Random Forest model by using the matching data onl
 
 That means even the gdpgrowth have no significant causal effect, it's still the most important feature.
 
+### Conclusion
+
+Our result shows clearly that even though the GDP Growth is the most important feature in the Random Forest model, it can not show that it have significant causal effect. Using Random Forest to do causal inference can't make sense.
+
+However, our result may be not very good because there are only limited number of positive samples. If we can get more balanced dataset, we can get a better result.
+
 ```markdown
 Syntax highlighted code block
 
