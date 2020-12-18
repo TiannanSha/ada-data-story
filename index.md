@@ -1,4 +1,8 @@
-## Our Awesome Title
+## Improving the performance and explainability of civil war onset predictive models
+
+### Introduction
+
+> Both the report/data story and the video pitch will be evaluated by people who are not closely familiar with the paper you are working on. It is important to first explain the main ideas from the paper, and how exactly the creative extension builds on it.
 
 In this project we extend the civilwar paper. We attempt to answer three questions
 
