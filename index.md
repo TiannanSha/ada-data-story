@@ -33,12 +33,12 @@ We implemented two neural networks (NN) with similar architectures, with one tak
 We used the Adam optimization algorithm to train our deepnet. We plotted the loss vs. epoch curve. We can see that the loss is flatten at the end of training. The accuracy oscillates around 98.3%. Because the loss and accuracy have stopped getting better, we believe the training has completed. Note that because we have extremly imbalanced class distribution, the 98.3% accuracy doesn't mean anything. (We can achieve 98% accuracy by simply guessing no war all the time). The loss and accuracy plots are for telling us when to finish training only.
 
 loss/accuracy vs. number of epoch (NN with 90 variables as input)
-![Image](/images/train_loss_NN90.png)
-![Image](/images/train_acc_NN90.png)
+![Image](/images/train_loss_NN90.svg)
+![Image](/images/train_acc_NN90.svg)
 
 loss/accuracy vs. number of epoch (NN with 285 variables as input)
-![Image](/images/train_loss_NN285.png)
-![Image](/images/train_acc_NN285.png)
+![Image](/images/train_loss_NN285.svg)
+![Image](/images/train_acc_NN285.svg)
 
 
 ##### Terrible Performance of NN
