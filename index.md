@@ -15,7 +15,7 @@ The challenge of working with imbalanced datasets is that most machine learning 
 
 In this project, we attempted three approaches, one is Synthetic Minority Over-sampling Technique (SMOTE) combined with random forest, the other is fully connected neural networks. We also applied random forest algorithm as our base line as in the civil war paper, random forest has the best performance. We experimented with each approach on both `90 variables` (the variables used in the paper) and `285 varialbes` (all varialbes included).
 
-#### 2.1
+#### 2.1 Evaluation
 
 Because we are essentially addressing a binary classification problem on imbalanced dataset, we compare all these approaches using receiver operating characteristic (ROC) curves and areas under the curves (AUC) as our evaluation metric. For neural networks, given the computational resouces available, we perform 5-fold stratified cross validation. For all other methods, we perform 10-fold stratified cross validation. We use stratified version because our dataset is highly imbalanced and we want to make sure each fold have the simialr class distribution as the entire dataset.
 
@@ -33,10 +33,12 @@ We implemented two neural networks (NN) with similar architectures, with one tak
 We used the Adam optimization algorithm to train our deepnet. We plotted the loss vs. epoch curve. We can see that the loss is flatten at the end of training. The accuracy oscillates around 98.3%. Because the loss and accuracy have stopped getting better, we believe the training has completed. Note that because we have extremly imbalanced class distribution, the 98.3% accuracy doesn't mean anything. (We can achieve 98% accuracy by simply guessing no war all the time). The loss and accuracy plots are for telling us when to finish training only.
 
 loss/accuracy vs. number of epoch (NN with 90 variables as input)
+
 ![Image](/images/train_loss_NN90.PNG)
 ![Image](/images/train_acc_NN90.PNG)
 
 loss/accuracy vs. number of epoch (NN with 285 variables as input)
+
 ![Image](/images/train_loss_NN285.PNG)
 ![Image](/images/train_acc_NN285.PNG)
 
