@@ -68,19 +68,19 @@ Our architecture to do the causal inference is:
 
 ### Treatment
 
-Because we want to get the causal effect of feature GDP Growth, we must find a good way to assign the samples into the Treatment Group and Control Group. If the Treatment $T$ is a binary value, the samples can be divided based on the binary value of $T$. However, the GDP Growth is continuous  float numbers, and the continues treatment problem is much more complex than the binary case. So our basic idea is to discretize the GDP Growth:
+Because we want to get the causal effect of feature GDP Growth, we must find a good way to assign the samples into the Treatment Group and Control Group. If the Treatment T is a binary value, the samples can be divided based on the binary value of T. However, the GDP Growth is continuous  float numbers, and the continues treatment problem is much more complex than the binary case. So our basic idea is to discretize the GDP Growth:
 
-<img src="images/causal2.png" style="zoom:70%;" />
+![](images/causal2.png)
 
 We divide the samples into three parts based on the quantile of the GDP Growth. In order to make sure the GDP Growth of the Treatment Group and Control Group have a "gap", we choose to drop the "middle" samples.
 
 ![](images/causal4.png)
 
-When the $\alpha$ is too big, the difference between the Treatment Group and Control Group will close to 0 and there is no gap between them. However when the $\alpha$ is too small, we the sample size of each group will be small, and we can only use a little part of the dataset.
+When the alpha is too big, the difference between the Treatment Group and Control Group will close to 0 and there is no gap between them. However when the alpha is too small, the sample size of each group will be small, and we can only use a little part of the dataset.
 
 ![](images/causal3.png)
 
- After tuning the alpha,  we choose to let $\alpha=0.3$ and we can use $60\%$ of the samples.
+ After tuning the alpha,  we choose to let alpha=0.3 and we can use 60% of the samples.
 
 What's more, from the density plot, we can see that the positive and negative samples has the similar distributions in each group.
 
@@ -114,21 +114,21 @@ We can match the samples by using a greedy algorithm:
 
 1. Drop some samples to make sure the two groups have the same range of propensity score.
 
-2. $t = min\_propensity\_score(Treatment)$, the sample is $s_t$
+2. t = min_propensity_score(Treatment), the sample is s_t
 
-   $c = min\_propensity\_score(Control)$, the sample is $s_c$
+   c = min_propensity_score(Control), the sample is s_c
 
-3. Compare $t$ and $c$:
-   1. $t - c > \delta$: drop $s_c$
-   2. $t - c < -\delta$: drop $s_t$
-   3. otherwise: match $(s_c, s_t)$ and drop them
+3. Compare t and c:
+   1. t - c > delta: drop s_c
+   2. t - c < -delta: drop s_t
+   3. otherwise: match (s_c, s_t) and drop them
 4. If there is no sample in Treatment Group or Control Group, return all the matches. Otherwise go back to step 2
 
  By running this algorithm, we can get the differences of the propensity scores in each pair:
 
 ![](images/causal8.png)
 
-We can find when the bound become smaller, the number of pairs becomes smaller. But when the bound become bigger, the quality of matches become worse. Finally we choose $bound = 0.0002$.
+We can find when the bound become smaller, the number of pairs becomes smaller. But when the bound become bigger, the quality of matches become worse. Finally we choose bound = 0.0002.
 
 After the matching, we can test the balance of the covariates again and get the result:
 
@@ -139,18 +139,6 @@ That means all covariates are balanced.
 
 
 ### Mean causal effect
-
-Compute the mean causal effect:
-$$
-\hat \tau = \frac{1}{\#pairs}\sum_{(c, t)\in pairs} (y_{t} - y_{c})
-$$
-Then we can get the:
-$$
-\hat \tau = 0.00659\\
-\sigma(\tau) = 0.1708
-$$
-So our result shows that there is no significant causal effect.
-
 
 
 ### Train Random Forest model with the matching data
