@@ -13,7 +13,7 @@ You can use the [editor on GitHub](https://github.com/TiannanSha/ada-data-story/
 Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
 
 #### 2.1 Neural Networks for predicting civil war
-![Image](src)
+![Image](/images/arch_NN90.png)
 
 #### 2.1 Synthetic Minority Over-sampling Technique
 
@@ -34,7 +34,7 @@ Syntax highlighted code block
 
 **Bold** and _Italic_ and `Code` text
 
-[Link](url) and ![Image](images/arch_NN90.png)
+[Link](url) and ![Image](src)
 ```
 
 For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
