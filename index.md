@@ -47,10 +47,10 @@ In our work, we will do the causal inference to learn if the value of GDP growth
 
 ### Causality
 
-One of the most widely used model of causal inference is the Neyman-Rubin model.  In a basic Neyman-Rubin model, if we want to know the causal effect of a feature $T$, we will assign the samples into two groups based on the value of $T$: 
+One of the most widely used model of causal inference is the Neyman-Rubin model.  In a basic Neyman-Rubin model, if we want to know the causal effect of a feature $T$, we will assign the samples into two groups based on the value of $$T$$: 
 
-* Treatment group: $T = 1$
-* Control group: $T = 0$
+* Treatment group: $$T = 1$$
+* Control group: $$T = 0$$
 
 Then, the potential output of the two groups, $Y|T=1$ and $Y|T=0$ can be compared and show the causal effect of feature $T$:
 $$
