@@ -52,7 +52,7 @@ We also applied Support Vector Machine, a classic classification algorithm. We a
 
 #### 2.5 Compare all models
 Now we compare all models. The number 285/90 denotes the number of explanotory variables. We can see that neural networks have the worst performance where as random forest with or without SMOTE have the best performance. SVMs have good results but not as good as random forests with or without SMOTE. For all methods except neural networks, including all the variables help improving the performance by quite a bit.
-![Image](/images/NN285-roc.png)
+![Image](/images/all_models_rocs.png)
 
 
 ## 3 Causal Inference of the GDP related features
