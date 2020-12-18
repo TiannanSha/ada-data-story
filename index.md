@@ -9,18 +9,51 @@ Secondly, our aim is to investigate the interrelation that exists between civil 
 
 These question broaden the scope of the paper and complement it.
 
-## 2. Improving the Performance
+### 2. Improving the Performance
 
-You can use the [editor on GitHub](https://github.com/TiannanSha/ada-data-story/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+The challenge of working with imbalanced datasets is that most machine learning techniques will ignore, and in turn have poor performance on, the minority class, although typically it is performance on the minority class that is most important. In our case, having civil, i.e. $y=1$, is the minority class, and it is more important to predict civil war onset correctly when there is going to be one. 
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+In this project, we attempted three approaches, one is Synthetic Minority Over-sampling Technique (SMOTE) combined with random forest, the other is fully connected neural networks. We also applied random forest algorithm as our base line as in the civil war paper, random forest has the best performance. We experimented with each approach on both `90 variables` (the variables used in the paper) and `285 varialbes` (all varialbes included).
 
-### 2.1 Neural Networks for predicting civil war
+#### 2.1
+
+Because we are essentially addressing a binary classification problem on imbalanced dataset, we compare all these approaches using receiver operating characteristic (ROC) curves and areas under the curves (AUC) as our evaluation metric. For neural networks, given the computational resouces available, we perform 5-fold stratified cross validation. For all other methods, we perform 10-fold stratified cross validation. We use stratified version because our dataset is highly imbalanced and we want to make sure each fold have the simialr class distribution as the entire dataset.
+
+#### 2.2 Synthetic Minority Over-sampling Technique
+One approach to addressing imbalanced datasets is to oversample the minority class. One idea is that new examples can be synthesized from the existing examples. This is a type of data augmentation for the minority class and is referred to as the Synthetic Minority Oversampling Technique, or SMOTE for short. The performance of SMOTE combined with random forest is shown in section 2.5.
+
+#### 2.3 Neural Networks
+Being one of the most flashy algorithms of all time, we believe it will be worth trying out neural networks. But although spend a long time trying to get them work and improve them, they seem to have very poor performance against our very imbalanced dataset.
+
+##### Architecture
 ![Image](/images/arch_NN90.png)
+We implemented two neural networks (NN) with similar architectures, with one takes in 90 variables and the other takes in 284 variables. The above image illustrates the architecture of the NN with 90 input variables. It has two hidden layers with relu functions as activati on functions. The final activation function is a logit function so that the NN outputs the probability of `y=1`. We also applied `dropout` and `batchnorm`. We applied `dropout` hoping that it will regularize the NNs and prevent them from overfitting. We applied `batchnorm` to make artificial neural networks faster and more stable through normalization of the input layer by re-centering and re-scaling.
 
-### 2.1 Synthetic Minority Over-sampling Technique
+##### Training
+We used the Adam optimization algorithm to train our deepnet. We plotted the loss vs. epoch curve. We can see that the loss is flatten at the end of training. The accuracy oscillates around 98.3%. Because the loss and accuracy have stopped getting better, we believe the training has completed. Note that because we have extremly imbalanced class distribution, the 98.3% accuracy doesn't mean anything. (We can achieve 98% accuracy by simply guessing no war all the time). The loss and accuracy plots are for telling us when to finish training only.
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+loss/accuracy vs. number of epoch (NN with 90 variables as input)
+![Image](/images/train_loss_NN90.png)
+![Image](/images/train_acc_NN90.png)
+
+loss/accuracy vs. number of epoch (NN with 285 variables as input)
+![Image](/images/train_loss_NN285.png)
+![Image](/images/train_acc_NN285.png)
+
+
+##### Terrible Performance of NN
+It turned out that although being some of the most flashy classification algorithms, neural networks (NNs) perform really poorly on our very imbalanced dataset. We believe this might be because the data examples for no war are too many and they provide the NNs with very strong signal, where as the data examples for wars provide very weak signal. So the NNs are overfitted to the "no war" examples and have not learned much from the "war" examples. 
+![Image](/images/NN90-roc.png)
+![Image](/images/NN285-roc.png)
+ 
+
+#### 2.4 SVM
+We also applied Support Vector Machine, a classic classification algorithm. We applied the normalization first and then feed the normalized data to the SVM model. The performance of SVM is shown in section 2.5.
+
+#### 2.5 Compare all models
+Now we compare all models. The number 285/90 denotes the number of explanotory variables. We can see that neural networks have the worst performance where as random forest with or without SMOTE have the best performance. SVMs have good results but not as good as random forests with or without SMOTE. For all methods except neural networks, including all the variables help improving the performance by quite a bit.
+![Image](/images/NN285-roc.png)
+
 
 ## 3 Causal Inference of the GDP related features
 
