@@ -140,6 +140,9 @@ That means all covariates are balanced.
 
 ### Mean causal effect
 
+The mean causal effect is t = E(y_treatment - y_control) = 0.00659, and the standard deviation of it is 0.1708.
+
+So our result shows that there is no significant causal effect.
 
 ### Train Random Forest model with the matching data
 
