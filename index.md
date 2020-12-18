@@ -2,7 +2,12 @@
 
 ## 1. Introduction
 This project is based on the article "Comparing Random Forest with Logistic Regression for Predicting Class-Imbalanced Civil War Onset Data" by Muchlinski, Siroky, He and Kocher. This article proposes to use a Random Forest classification model in order to predict Ciwil war onset. This method would be a more efficient alternative to the logistic regression methods that are commonly used in the field for such purpose. 
-In this project we extend the the purpose of the paper on civil war onset. We attempt to answer three questions 
+
+In this project we extend the the purpose of the paper on civil war onset. First, we want to analyse an alternative approach for predicting civil war onset that could potentially predict the performance of the model.  This approach is based on Neural networks.
+
+Secondly, our aim is to investigate the interrelation that exists between civil war and economic growth. First, we will establish a model to infer the causal effect of gdp growth on civil war onset. Finally, we will show how the occurrence of a civil war affects the local growth after the end of the war.
+
+These question broaden the scope of the paper and complement it.
 
 ## 2. Improving the Performance
 
