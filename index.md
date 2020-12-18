@@ -1,10 +1,8 @@
 # Improving the performance and explainability of civil war onset predictive models
 
 ## 1. Introduction
-
-> Both the report/data story and the video pitch will be evaluated by people who are not closely familiar with the paper you are working on. It is important to first explain the main ideas from the paper, and how exactly the creative extension builds on it.
-
-In this project we extend the civilwar paper. We attempt to answer three questions
+This project is based on the article "Comparing Random Forest with Logistic Regression for Predicting Class-Imbalanced Civil War Onset Data" by Muchlinski, Siroky, He and Kocher. This article proposes to use a Random Forest classification model in order to predict Ciwil war onset. This method would be a more efficient alternative to the logistic regression methods that are commonly used in the field for such purpose. 
+In this project we extend the the purpose of the paper on civil war onset. We attempt to answer three questions 
 
 ## 2. Improving the Performance
 
