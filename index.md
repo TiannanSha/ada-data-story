@@ -45,7 +45,7 @@ However, it must be very cautious while talking about the causality. In most of 
 
 In our work, we will do the causal inference to learn if the value of GDP growth can really lead to civil war onset by using the same dataset and features as the Random Forest model.  
 
-### Causality
+### 3.2 Causality
 
 One of the most widely used model of causal inference is the Neyman-Rubin model.  In a basic Neyman-Rubin model, if we want to know the causal effect of a feature T, we will assign the samples into two groups based on the value of T: 
 
@@ -66,7 +66,7 @@ Our architecture to do the causal inference is:
 
 ![](images/causal1.PNG)
 
-### Treatment
+### 3.3 Treatment
 
 Because we want to get the causal effect of feature GDP Growth, we must find a good way to assign the samples into the Treatment Group and Control Group. If the Treatment T is a binary value, the samples can be divided based on the binary value of T. However, the GDP Growth is continuous  float numbers, and the continues treatment problem is much more complex than the binary case. So our basic idea is to discretize the GDP Growth:
 
@@ -86,7 +86,7 @@ What's more, from the density plot, we can see that the positive and negative sa
 
 
 
-### Covariates
+### 3.4 Covariates
 
 Based on the Random Forest Model, we can select some features as covariates. Now let's show that these covariates are imbalanced in Treatment and Control Group, by using the t-test of the mean of two independent samples:
 
@@ -96,7 +96,7 @@ Most of the features are imbalanced in the Treatment Group and Control Group. So
 
 
 
-### Propensity score
+### 3.5 Propensity score
 
 We train a model to predict if the sample is in the treatment group by using the the covariates. The probability of the prediction can be regard as the  propensity score. We try three different models to get the propensity score.
 
@@ -106,7 +106,7 @@ Based on the result above, we choose to use the Logistic Regression model to gen
 
 
 
-### Matching
+### 3.6 Matching
 
 We can match the samples by using a greedy algorithm:
 
@@ -138,7 +138,7 @@ That means all covariates are balanced.
 
 
 
-### Mean causal effect
+### 3.7 Mean causal effect
 
 The mean causal effect is:
 
@@ -146,7 +146,7 @@ The mean causal effect is:
 
 So our result shows that there is no significant causal effect.
 
-### Train Random Forest model with the matching data
+### 3.8 Train Random Forest model with the matching data
 
 Finally, we choose to train a Random Forest model by using the matching data only. The importance of the features is:
 
@@ -154,7 +154,7 @@ Finally, we choose to train a Random Forest model by using the matching data onl
 
 That means even the gdpgrowth have no significant causal effect, it's still the most important feature.
 
-### Conclusion
+### 3.9 Conclusion
 
 Our result shows clearly that even though the GDP Growth is the most important feature in the Random Forest model, it can not show that it have significant causal effect. Using Random Forest to do causal inference can't make sense.
 
