@@ -1,20 +1,21 @@
 ## Improving the performance and explainability of civil war onset predictive models
 
-### Introduction
+### 1. Introduction
 
 > Both the report/data story and the video pitch will be evaluated by people who are not closely familiar with the paper you are working on. It is important to first explain the main ideas from the paper, and how exactly the creative extension builds on it.
 
 In this project we extend the civilwar paper. We attempt to answer three questions
 
-### Improving the Performance
+### 2. Improving the Performance
 
 You can use the [editor on GitHub](https://github.com/TiannanSha/ada-data-story/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
 
 Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
 
-#### Neural Networks for predicting civil war
+#### 2.1 Neural Networks for predicting civil war
+![Image](src)
 
-#### Synthetic Minority Over-sampling Technique
+#### 2.1 Synthetic Minority Over-sampling Technique
 
 Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
 
