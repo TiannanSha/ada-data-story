@@ -6,13 +6,15 @@
 
 In this project we extend the civilwar paper. We attempt to answer three questions
 
-### Neural Networks for predicting civil war
+### Improving the Performance
 
 You can use the [editor on GitHub](https://github.com/TiannanSha/ada-data-story/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
 
 Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
 
-### Neural Networks for predicting civil war
+#### Neural Networks for predicting civil war
+
+#### Synthetic Minority Over-sampling Technique
 
 Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
 
