@@ -17,7 +17,7 @@ In this project, we attempted three approaches, Synthetic Minority Over-sampling
 
 #### 2.1 Evaluation of different models
 
-Because we are essentially addressing a binary classification problem on imbalanced dataset, we compare all these approaches using receiver operating characteristic (ROC) curves and areas under the curves (AUC) as our evaluation metric. For neural networks, given the computational resouces available, we perform 5-fold stratified cross validation. For all other methods, we perform 10-fold stratified cross validation. We use stratified version because our dataset is highly imbalanced and we want to make sure each fold have the simialr class distribution as the entire dataset.
+Because we are essentially addressing a binary classification problem on imbalanced dataset, we compare all these approaches using receiver operating characteristic (ROC) curves and areas under the curves (AUC) as our evaluation metric. For neural networks, given the computational resouces available, we perform 5-fold stratified cross validation. For all other methods, we perform 10-fold stratified cross validation (the civilwar paper used 10-fold, and claim they also tried 5-fold, and there was no big difference.). We use stratified version because our dataset is highly imbalanced and we want to make sure each fold have the simialr class distribution as the entire dataset.
 
 #### 2.2 Synthetic Minority Over-sampling Technique
 One approach to addressing imbalanced datasets is to oversample the minority class. One idea is that new examples can be synthesized from the existing examples. This is a type of data augmentation for the minority class and is referred to as the Synthetic Minority Oversampling Technique, or SMOTE for short. The performance of SMOTE combined with random forest is shown in section 2.5.
@@ -44,7 +44,7 @@ loss/accuracy vs. number of epoch (NN with 285 variables as input)
 
 
 ##### Terrible Performance of NN
-It turned out that although being some of the most flashy classification algorithms, neural networks (NNs) perform really poorly on our very imbalanced dataset. We believe this might be because the data examples for no war (y=0) are too many and they provide the NNs with very strong signal, whereas the very few data examples for wars (y=1) provide very weak signal. So the NNs are overfitted to the "no war" examples and have not learned much from the "war" examples. 
+It turned out that although being some of the most flashy classification algorithms, neural networks (NNs) perform really poorly on our very imbalanced dataset. We believe this might be because the data examples for no war (y=0) are too many and they provide the NNs with very strong signal, whereas the very few data examples for wars (y=1) provide very weak signal. So the NNs are overfitted to the "no war" examples and have not learned much from the "war" examples. The following plots show the two NNs performance using 5-fold stratified cross validation.
 ![Image](/images/NN90-roc.png)
 ![Image](/images/NN285-roc.png)
  
@@ -53,7 +53,7 @@ It turned out that although being some of the most flashy classification algorit
 We also applied Support Vector Machine, a classic classification algorithm. We applied the normalization first and then fed the normalized data to the SVM model. The performance of SVM is shown in section 2.5.
 
 #### 2.5 Compare all models
-Now we compare all the models. The number 90/285 denotes the number of explanotory variables in the input. SMOTE denotes combining SMOTE sampling with random forest. We can see that neural networks have the worst performance whereas random forest with or without SMOTE have the best performance. SVMs have good results but not as good as random forests with or without SMOTE. For all methods except neural networks, including all the variables help improving the performance by quite a bit.
+Now we compare all the models. The number 90/285 denotes the number of explanotory variables in the input. SMOTE denotes combining SMOTE sampling with random forest. We can see that neural networks have the worst performance whereas random forest with or without SMOTE have the best performance. SVMs have good results but not as good as random forests with or without SMOTE. For all methods except neural networks, including all the variables help improving the performance by quite a bit. The mean ROC curves and mean AUC scores are averaged over stratified 5-fold crossvalidation for the NNs. For all other models, the mean ROC curves and mean AUC scores are averaged over stratified 10-fold crossvalidation, as the civilwar paper used 10-fold.
 ![Image](/images/all_models_rocs.png)
 
 
